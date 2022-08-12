@@ -9709,10 +9709,10 @@ function run() {
 
         if (!deployStage) throw new Error('Failed to set environment.');
 
-        console.log(`OS env var ==> DEPLOY_STAGE : ${deployStage}`)
-        console.log(`OS env var ==> IMAGE_TAG : ${imageTag}`)
-        core.exportVariable('DEPLOY_STAGE', deployStage)
-        core.exportVariable('IMAGE_TAG', imageTag)
+        console.log(`deploy_stage : ${deployStage}`)
+        console.log(`image_tag : ${imageTag}`)
+        core.setOutput('deploy_stage', deployStage)
+        core.setOutput('image_tag', imageTag)
     } catch (error) {
         core.setFailed(error?.message);
     }

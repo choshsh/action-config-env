@@ -8,8 +8,11 @@ inputs:
     description: 'Production branch name'
     required: true
 outputs:
-  time: # id of output
-    description: 'The time we greeted you'
+  deploy_stage:
+    description: 'Deploy stage'
+  image_tag:
+    description: 'Image tag'
+
 runs:
   using: 'node16'
   main: 'dist/index.js'
