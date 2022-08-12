@@ -9685,23 +9685,38 @@ const github = __nccwpck_require__(2726);
 
 function run() {
     try {
-        // `who-to-greet` input defined in action metadata file
-        const nameToGreet = core.getInput('who-to-greet');
-        console.log(`Hello ${nameToGreet}!`);
+        // input
+        const branch = core.getInput('branch');
+        const branchProd = core.getInput('branch-prod');
 
-        const time = (new Date()).toTimeString();
-        core.setOutput("time", time);
+        // variable
+        let deployStage = ''
+        let imageTag = ''
 
-        // Get the JSON webhook payload for the event that triggered the workflow
-        const payload = JSON.stringify(github.context.payload, undefined, 2)
-        console.log(`The event payload: ${payload}`);
+        // set env
+        const eventName = github.context.eventName
+        switch (eventName) {
+            case 'push':
+                deployStage = branch === branchProd ? 'prod' : 'dev'
+                imageTag = `${deployStage}-${github.context.sha}`
+                break
+            case 'pull_request':
+                // const headRef = github.context.payload.pull_request.head.ref
+                deployStage = 'dev'
+                imageTag = `${deployStage}-${context.sha}`
+                break
+            default:
+                core.setFailed('This action only runs on push, pr.');
+        }
 
-        core.exportVariable("CHOSHSH_1", nameToGreet)
+        console.log(`OS env var ==> DEPLOY_STAGE : ${deployStage}`)
+        console.log(`OS env var ==> IMAGE_TAG : ${imageTag}`)
+        core.exportVariable('DEPLOY_STAGE', deployStage)
+        core.exportVariable('IMAGE_TAG', imageTag)
     } catch (error) {
         core.setFailed(error?.message);
     }
 }
-
 ;// CONCATENATED MODULE: ./src/index.js
 
 

@@ -1,10 +1,12 @@
 name: 'Config Env'
 description: 'Config Env'
 inputs:
-  who-to-greet: # id of input
-    description: 'Who to greet'
+  branch:
+    description: 'Current branch name'
     required: true
-    default: 'World'
+  branch-prod:
+    description: 'Production branch name'
+    required: true
 outputs:
   time: # id of output
     description: 'The time we greeted you'
