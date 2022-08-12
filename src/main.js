@@ -25,7 +25,7 @@ export function run() {
                 break
         }
 
-        if (!deployStage) throw 'Failed to set environment.';
+        if (!deployStage) throw new Error('Failed to set environment.');
 
         console.log(`OS env var ==> DEPLOY_STAGE : ${deployStage}`)
         console.log(`OS env var ==> IMAGE_TAG : ${imageTag}`)

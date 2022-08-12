@@ -9703,11 +9703,11 @@ function run() {
             case 'pull_request':
                 // const headRef = github.context.payload.pull_request.head.ref
                 deployStage = 'dev'
-                imageTag = `${deployStage}-${context.sha}`
+                imageTag = `${deployStage}-${github.context.sha}`
                 break
-            default:
-                core.setFailed('This action only runs on push, pr.');
         }
+
+        if (!deployStage) throw new Error('Failed to set environment.');
 
         console.log(`OS env var ==> DEPLOY_STAGE : ${deployStage}`)
         console.log(`OS env var ==> IMAGE_TAG : ${imageTag}`)
