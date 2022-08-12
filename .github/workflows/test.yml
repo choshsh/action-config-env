@@ -1,0 +1,24 @@
+name: Test this action
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Test this action (prod)
+        uses: ./
+        with:
+          branch: ${{ github.ref_name }}
+          branch-prod: master
+
+      - name: Test this action (dev)
+        uses: ./
+        with:
+          branch: dev
+          branch-prod: master
